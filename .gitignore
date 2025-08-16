@@ -34,8 +34,4 @@ lerna-debug.log*
 
 # self
 /.idea/
-/package.json
-/package-lock.json
 /README.md
-/tsconfig.json
-/wrangler.jsonc
