@@ -1,9 +1,11 @@
 import { Hono } from 'hono';
-
 const app = new Hono();
 
-app.get('/', (c) => {
-  return c.text('Hello Hono!');
-});
+app.get('/', honoText);
 
 export default app;
+
+
+function honoText(context) {
+    return context.text('🔥');
+}
