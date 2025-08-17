@@ -3,17 +3,14 @@ import { Hono, Context } from 'hono';
 function main() {
 
     const app = new Hono();
-    const arrayLength = 3;
+    const arrayLength = 1;
     const array = Array.from({ length: arrayLength }, function() { return new Hono(); });
 
     array[0].get('/', articleHtml);
-    array[0].get('/:id', articleHtml);
-    array[1].get('/:id', editArticleHtml);
-    array[2].get('/', listArticleHtml);
+    array[0].get('/:1', articleHtml);
+    array[0].get('/:1/:2', articleHtml);
 
     app.route('/', array[0]);
-    app.route('/edit', array[1]);
-    app.route('/list', array[2]);
 
     return app;
 
@@ -22,13 +19,16 @@ export default main();
 
 
 function articleHtml(context: Context) {
-    return context.text('/' + context.req.param('id'));
-}
-
-function editArticleHtml(context: Context) {
-    return context.text('/edit/' + context.req.param('id'));
-}
-
-function listArticleHtml(context: Context) {
-    return context.text('🔥🔥🔥');
+    const param = [ context.req.param('1'), context.req.param('2') ];
+    let text = '/';
+    if (param[0] === 'list') {
+        text = '🔥🔥🔥'
+    } else if (param[0]) {
+        if (param[1] === 'edit') {
+            text = '/' + param + '/edit';
+        } else {
+            text = '/' + param;
+        }
+    }
+    return context.text(text);
 }
