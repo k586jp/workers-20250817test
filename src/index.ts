@@ -6,9 +6,10 @@ function main() {
     const arrayLength = 1;
     const array = Array.from({ length: arrayLength }, function() { return new Hono(); });
 
-    array[0].get('/', articleHtml);
-    array[0].get('/:1', articleHtml);
-    array[0].get('/:1/:2', articleHtml);
+    array[0].get('/', indexHtml);
+    array[0].get('/list', listHtml);
+    array[0].get('/:id', articleHtml);
+    array[0].get('/:id/edit', editHtml);
 
     app.route('/', array[0]);
 
@@ -18,17 +19,20 @@ function main() {
 export default main();
 
 
+function indexHtml(context: Context) {
+    return context.html('<a href="/list">List Page</a><br><a href="/18cd3748-9a76-4a05-8c69-ba0b8c1a9d17">Article Page</a><br><a href="/18cd3748-9a76-4a05-8c69-ba0b8c1a9d17/edit">Edit Page</a>');
+}
+
+function listHtml(context: Context) {
+    return context.text('🔥🔥🔥');
+}
+
 function articleHtml(context: Context) {
-    const param = [ context.req.param('1'), context.req.param('2') ];
-    let text = '/';
-    if (param[0] === 'list') {
-        text = '🔥🔥🔥'
-    } else if (param[0]) {
-        if (param[1] === 'edit') {
-            text = '/' + param[0] + '/edit';
-        } else {
-            text = '/' + param[0];
-        }
-    }
+    let text = '/' + context.req.param('id');
+    return context.text(text);
+}
+
+function editHtml(context: Context) {
+    let text = '/' + context.req.param('id') + '/edit';
     return context.text(text);
 }
