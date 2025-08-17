@@ -1,4 +1,5 @@
-import { Hono, Context } from 'hono';
+import { Hono, Context as c } from 'hono';
+import { index } from './html-template';
 
 function main() {
 
@@ -16,23 +17,23 @@ function main() {
     return app;
 
 }
-export default main();
+export default { fetch: main().fetch };
 
 
-function indexHtml(context: Context) {
-    return context.html('<a href="/list">List Page</a><br><a href="/18cd3748-9a76-4a05-8c69-ba0b8c1a9d17">Article Page</a><br><a href="/18cd3748-9a76-4a05-8c69-ba0b8c1a9d17/edit">Edit Page</a>');
+function indexHtml(context: c) {
+    return context.html(index());
 }
 
-function listHtml(context: Context) {
+function listHtml(context: c) {
     return context.text('🔥🔥🔥');
 }
 
-function articleHtml(context: Context) {
+function articleHtml(context: c) {
     let text = '/' + context.req.param('id');
     return context.text(text);
 }
 
-function editHtml(context: Context) {
+function editHtml(context: c) {
     let text = '/' + context.req.param('id') + '/edit';
     return context.text(text);
 }
