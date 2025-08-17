@@ -25,9 +25,9 @@ function articleHtml(context: Context) {
         text = '🔥🔥🔥'
     } else if (param[0]) {
         if (param[1] === 'edit') {
-            text = '/' + param + '/edit';
+            text = '/' + param[0] + '/edit';
         } else {
-            text = '/' + param;
+            text = '/' + param[0];
         }
     }
     return context.text(text);
