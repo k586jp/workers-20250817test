@@ -8,9 +8,12 @@ jobs:
     runs-on: ubuntu-latest
     name: Deploy
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v5
       - name: Install
-        run: npm install
+        run: npm install wrangler
+      - name: npm ls
+        run: npm ls
       - name: Deploy
         uses: cloudflare/wrangler-action@v3
         with:
